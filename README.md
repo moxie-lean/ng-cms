@@ -8,7 +8,7 @@
 The easiest way to install this package is by using npm from your terminal:
 
 ```
-npm install --save-dev leean-cms
+npm install ln-cms --save-dev
 ```
 
 
