@@ -1,5 +1,5 @@
 {
-  "name": "leean-cms",
+  "name": "ln-cms",
   "version": "0.1.0",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
@@ -7,8 +7,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
-  "license": "MIT",
-  "devDependencies": {
-    "angular": "^1.5.1"
-  }
+  "license": "MIT"
 }
