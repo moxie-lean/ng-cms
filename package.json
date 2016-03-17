@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "^1.5.1"
+  }
 }
