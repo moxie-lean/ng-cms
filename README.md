@@ -77,10 +77,10 @@ LnCms uses [AngularUI Router](https://github.com/angular-ui/ui-router) to define
 
 Each of the routes will try to load its corresponding template from paths like this: ```templates/<route-template>/template.html```. Examples: 
 
-templates/home/template.html
-templates/allPhotos/template.html
-templates/authorPhotos/template.html
-templates/photo/template.html
+templates/**home**/template.html  
+templates/**allPhotos**/template.html  
+templates/**authorPhotos**/template.html  
+templates/**photo**/template.html  
 
 To link to the different states you have to use ```ui-sref``` directive from AngularUI Router. Here are some examples:
 
