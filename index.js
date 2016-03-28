@@ -19,10 +19,17 @@ var lnCms = angular.module('lnCms', [
         var routes = response.data;
 
         angular.forEach(routes, function(route, key) {
-          lnCms.stateProvider.state(route.state, {
+          var state = {
+            name: route.state,
             url: route.url,
-            templateUrl: 'templates/' + route.template + '/template.html'
-          });
+            templateUrl: 'templates/' + route.template + '/template.html',
+            data: {
+              endpoint: (route.endpoint || 'post'),
+              fixedParams: (route.params || {})
+            }
+          };
+
+          lnCms.stateProvider.state(state);
         });
 
         //enable $urlRouter listener again

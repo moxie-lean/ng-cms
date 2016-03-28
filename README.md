@@ -46,7 +46,7 @@ The module provides a controller which loads data form your CMS as the route cha
 
 ### LnCmsController
 
-Listens for route changes and sends a message to the CMS for data each time. It also loads routes and static data once when the app loads. It expects API endpoints terminating in /post, /static and /routes for this.
+Listens for route changes and sends a message to the CMS for data each time. It also loads routes and static data once when the app loads. It expects API endpoints terminating in /static and /routes for this.
 
 LnCms uses [AngularUI Router](https://github.com/angular-ui/ui-router) to define the available routes and their corresponding states. The module loads the configuration data to define the routes from the /routes backend endpoint, which expects an output like the following:
 
@@ -55,22 +55,38 @@ LnCms uses [AngularUI Router](https://github.com/angular-ui/ui-router) to define
   {
     "state": "home",
     "url": "/",
-    "template": "home"
+    "template": "home",
+    "endpoint": "post",
+    "params": {
+      "id": 123
+    }
   },
   {
     "state": "allPhotos",
     "url": "/photos",
-    "template": "allPhotos"
+    "template": "allPhotos",
+    "endpoint": "collection",
+    "params": {
+      "type": "photo",
+      "posts_per_page": 10
+    }
   },
   {
     "state": "authorPhotos",
     "url": "/photos/:authorId",
-    "template": "authorPhotos"
+    "template": "authorPhotos",
+    "endpoint": "collection",
+    "params": {
+      "type": "photo",
+      "posts_per_page": 10
+    }
   },
   {
     "state": "photo",
     "url": "/photos/:authorId/:photoId",
-    "template": "photo"
+    "template": "photo",
+    "endpoint": "post",
+    "params": {}
   }
 ]
 ```
@@ -98,39 +114,61 @@ To link to the different states you have to use ```ui-sref``` directive from Ang
 <a ui-sref="photo({authorId: \"juan\", photoId: \"everest\"})">
 ```
 
+It is also possible to link using the angular URLs of each route:
+
+```html
+<!-- link to home page -->
+<a href="#/home">
+
+<!-- link to all photos page -->
+<a href="#/allPhotos">
+
+<!-- link to Juan's photos page -->
+<a href="#/photos/juan">
+
+<!-- link to Everest photo page from Juan -->
+<a href="#/photos/juan/everest">
+```
+
 ### ln-cms-view Directive
 
 Includes the corresponding template using the ```ui-view``` directive from AngularUI Router and passes the view and static data to sub-directives. Each time the view data changes due to a change of the current route, the directive reloads the current state.
 
-In order to load the view data from the backend, LnCms uses the /post endpoint which must receive the state as parameter, and optionally the extra parameters needed to search for the corresponding view data. Here are some examples:
+In order to load the view data from the backend, LnCms uses the defined route endpoint which must receive the defined parameters, and optionally the URL extra parameters needed to search for the corresponding view data. Here are some examples:
 
 ```javascript
-// GET /post?state=home
+// GET /post?id=123
 [
   {
-    "post_id": 1,
-    "state": "home",
+    "id": 123,
     "content": { ... },
     "meta": { ... }
   }
 ]
 
-// GET /post?state=authorPhotos&authorId=juan
+// GET /collection?type=photo&posts_per_page=10&authorId=juan
 [
   {
-    "post_id": 2,
-    "state": "authorPhotos",
+    "id": 201,
+    "type": "photo",
+    "authorId": "juan",
+    "content": { ... },
+    "meta": { ... }
+  },
+  {
+    "id": 202,
+    "type": "photo",
     "authorId": "juan",
     "content": { ... },
     "meta": { ... }
   }
 ]
 
-// GET /post?state=photo&authorId=juan&photoId=everest
+// GET /post?type=photo&authorId=juan&photoId=everest
 [
   {
-    "post_id": 3,
-    "state": "photo",
+    "id": 301,
+    "type": "photo",
     "authorId": "juan",
     "photoId": "everest",
     "content": { ... },
