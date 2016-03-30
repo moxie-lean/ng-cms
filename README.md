@@ -1,4 +1,4 @@
-# Leean CMS
+# Lean CMS
 
 > An AngularJS module for loading content from a CMS.
 
