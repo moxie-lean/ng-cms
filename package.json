@@ -1,6 +1,6 @@
 {
   "name": "ln-cms",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
   "scripts": {
