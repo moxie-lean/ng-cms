@@ -1,8 +1,11 @@
 {
   "name": "ln-cms",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
+  "dependencies": {
+    "angular-ui-router": "~0.2.18"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
