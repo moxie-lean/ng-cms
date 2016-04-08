@@ -15,7 +15,7 @@ var lnCms = angular.module('lnCms', [
 ])
 .run(['lnCmsClientService', '$urlRouter',
   function(lnCmsClientService, $urlRouter) {
-    lnCms.urlRouterProvider.otherwise('/');
+    lnCms.urlRouterProvider.otherwise('/not-found');
 
     lnCmsClientService.getRoutes()
       .then(function(response) {
@@ -32,8 +32,18 @@ var lnCms = angular.module('lnCms', [
             }
           };
 
+          if (route.url == '/') {
+            //define default state for the empty url
+            var defState = JSON.parse(JSON.stringify(state));
+            defState.name = 'default';
+            defState.url = '';
+            lnCms.stateProvider.state(defState);
+          }
+
+          //add state for the route
           lnCms.stateProvider.state(state);
         });
+
         //enable $urlRouter listener again
         $urlRouter.listen();
       });
