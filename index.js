@@ -13,8 +13,8 @@ var lnCms = angular.module('lnCms', [
     $urlRouterProvider.deferIntercept();
   }
 ])
-.run(['lnCmsClientService', '$urlRouter', '$rootScope',
-  function(lnCmsClientService, $urlRouter, $rootScope) {
+.run(['lnCmsClientService', '$urlRouter',
+  function(lnCmsClientService, $urlRouter) {
     lnCms.urlRouterProvider.otherwise('/');
 
     lnCmsClientService.getRoutes()
@@ -37,11 +37,6 @@ var lnCms = angular.module('lnCms', [
         //enable $urlRouter listener again
         $urlRouter.listen();
       });
-
-      $rootScope.$on('$stateChangeSuccess', resetScroll);
-      function resetScroll() {
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
-      }
   }
 ]);
 
