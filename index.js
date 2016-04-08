@@ -1,7 +1,7 @@
 var lnCms = angular.module('lnCms', [
   'ngConstants', require('angular-ui-router')
 ])
-.config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', 
+.config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider',
   function ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     lnCms.stateProvider = $stateProvider;
     lnCms.urlRouterProvider = $urlRouterProvider;
@@ -13,8 +13,8 @@ var lnCms = angular.module('lnCms', [
     $urlRouterProvider.deferIntercept();
   }
 ])
-.run(['lnCmsClientService', '$urlRouter',
-  function(lnCmsClientService, $urlRouter) {
+.run(['lnCmsClientService', '$urlRouter', '$rootScope',
+  function(lnCmsClientService, $urlRouter, $rootScope) {
     lnCms.urlRouterProvider.otherwise('/');
 
     lnCmsClientService.getRoutes()
@@ -34,12 +34,17 @@ var lnCms = angular.module('lnCms', [
 
           lnCms.stateProvider.state(state);
         });
-
         //enable $urlRouter listener again
         $urlRouter.listen();
       });
+
+      $rootScope.$on('$stateChangeSuccess', resetScroll);
+      function resetScroll() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      }
   }
 ]);
+
 
 require('./lib/client.service');
 require('./lib/controller');
