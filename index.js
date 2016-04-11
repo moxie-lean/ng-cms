@@ -53,5 +53,5 @@ var lnCms = angular.module('lnCms', [
 
 require('./lib/client.service');
 require('./lib/controller');
-require('./lib/head.directive');
+require('./lib/meta.directive');
 require('./lib/view.directive');
