@@ -35,8 +35,8 @@ The module provides a controller which loads data form your CMS as the route cha
 ```html
 <!DOCTYPE html>
 <html lang="en" ng-app="app" ng-controller="LnCmsController as vm">
-  <head>
-    <ln-cms-meta meta-def="{{vm.view.meta}}"></ln-cms-meta>
+  <head ln-cms-meta="{{vm.view.meta}}">
+    ...
   </head>
   <body>
     <ln-cms-view view-def="{{vm.view}}" static-def="{{vm.static}}"></ln-cms-view>
@@ -181,4 +181,23 @@ You can use the ```content``` object to inject the custom data of each page to y
 
 ### ln-cms-meta Directive
 
-(not yet complete) Updates the meta information.
+Updates the meta information of the header of the page, using the metadata returned from the CMS inside the ```meta``` object of each view.
+
+```javascript
+// GET /post?id=123
+[
+  {
+    "id": 123,
+    "content": { ... },
+    "meta": {
+      "title": "App - Home",
+      "tags": [
+        {"name": "description", "content": ""},
+        {"property": "og:locale", "content": "en_US"},
+        {"name": "twitter:card", "content": "summary"},
+        ...
+      ]
+    }
+  }
+]
+```
