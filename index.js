@@ -13,9 +13,9 @@ var lnCms = angular.module('lnCms', [
     $urlRouterProvider.deferIntercept();
   }
 ])
-.run(['lnCmsClientService', '$urlRouter', '$rootScope',
-  function(lnCmsClientService, $urlRouter, $rootScope) {
-    lnCms.urlRouterProvider.otherwise('/');
+.run(['lnCmsClientService', '$urlRouter',
+  function(lnCmsClientService, $urlRouter) {
+    lnCms.urlRouterProvider.otherwise('/not-found');
 
     lnCmsClientService.getRoutes()
       .then(function(response) {
@@ -32,20 +32,26 @@ var lnCms = angular.module('lnCms', [
             }
           };
 
+          if (route.url == '/') {
+            //define default state for the empty url
+            var defState = JSON.parse(JSON.stringify(state));
+            defState.name = 'default';
+            defState.url = '';
+            lnCms.stateProvider.state(defState);
+          }
+
+          //add state for the route
           lnCms.stateProvider.state(state);
         });
+
         //enable $urlRouter listener again
         $urlRouter.listen();
       });
-
-      $rootScope.$on('$stateChangeSuccess', resetScroll);
-      function resetScroll() {
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
-      }
   }
 ]);
 
 
 require('./lib/client.service');
 require('./lib/controller');
+require('./lib/meta.directive');
 require('./lib/view.directive');
