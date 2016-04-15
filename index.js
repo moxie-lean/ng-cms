@@ -25,11 +25,11 @@ var lnCms = angular.module('lnCms', [
           var state = {
             name: route.state,
             url: route.url,
-            request: 'request' in route ? route.request : true,
             templateUrl: 'templates/' + route.template + '/template.html',
             data: {
               endpoint: (route.endpoint || 'post'),
-              fixedParams: (route.params || {})
+              fixedParams: (route.params || {}),
+              request: 'request' in route ? route.request : true
             }
           };
 
