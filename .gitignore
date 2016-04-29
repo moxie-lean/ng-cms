@@ -1,1 +1,9 @@
+#NPM
 node_modules/
+*.log
+
+#IDE Specific
+.idea
+
+#Package
+ln-cms-*.tgz
