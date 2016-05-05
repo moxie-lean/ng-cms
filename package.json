@@ -1,6 +1,7 @@
 {
   "name": "ln-cms",
-  "version": "0.5.0",
+  "version": "0.5.1",
+  "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
   "dependencies": {
@@ -9,6 +10,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moxie-lean/ng-cms"
+  },
+  "bugs": {
+    "url": "https://github.com/moxie-lean/ng-cms/issues"
+  },
   "license": "MIT"
 }
