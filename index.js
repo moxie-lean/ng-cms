@@ -4,19 +4,17 @@ var lnCms = angular.module('lnCms', [
 .config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider',
   function ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     lnCms.stateProvider = $stateProvider;
-    lnCms.urlRouterProvider = $urlRouterProvider;
 
     //allow trailing slashes on routes
     $urlMatcherFactoryProvider.strictMode(false);
 
     //prevent $urlRouter from automatically intercepting URL changes
     $urlRouterProvider.deferIntercept();
+    $urlRouterProvider.otherwise('/not-found');
   }
 ])
 .run(['lnCmsClientService', '$urlRouter',
   function(lnCmsClientService, $urlRouter) {
-    lnCms.urlRouterProvider.otherwise('/not-found');
-
     lnCmsClientService.getRoutes()
       .then(function(response) {
         var routes = response.data;
@@ -47,6 +45,7 @@ var lnCms = angular.module('lnCms', [
 
         //enable $urlRouter listener again
         $urlRouter.listen();
+        $urlRouter.sync();
       });
   }
 ]);
