@@ -1,6 +1,7 @@
 var lnCms = angular.module('lnCms', [
-  'ngConstants', require('angular-ui-router')
+  require('angular-ui-router')
 ])
+
 .config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider',
   function ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     lnCms.stateProvider = $stateProvider;
@@ -13,6 +14,7 @@ var lnCms = angular.module('lnCms', [
     $urlRouterProvider.otherwise('/not-found');
   }
 ])
+
 .run(['lnCmsClientService', '$urlRouter',
   function(lnCmsClientService, $urlRouter) {
     lnCmsClientService.getRoutes()
@@ -50,8 +52,8 @@ var lnCms = angular.module('lnCms', [
   }
 ]);
 
-
-require('./lib/client.service');
-require('./lib/controller');
-require('./lib/meta.directive');
-require('./lib/view.directive');
+require('./lib/cms.config.provider');
+require('./lib/cms.client.service');
+require('./lib/cms.controller');
+require('./lib/cms.meta.directive');
+require('./lib/cms.view.directive');
