@@ -31,6 +31,10 @@ var lnCms = angular.module('lnCms', [
             }
           };
 
+          if (route.stateParams) {
+            state.params = route.stateParams;
+          }
+
           if (route.url == '/') {
             //define default state for the empty url
             var defState = JSON.parse(JSON.stringify(state));
