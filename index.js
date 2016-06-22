@@ -15,6 +15,11 @@ var lnCms = angular.module('lnCms', [
 ])
 .run(['lnCmsClientService', '$urlRouter',
   function(lnCmsClientService, $urlRouter) {
+    lnCms.stateProvider.state({
+      name: 'loading',
+      templateUrl: 'templates/loading/template.html'
+    });
+
     lnCmsClientService.getRoutes()
       .then(function(response) {
         var routes = response.data;

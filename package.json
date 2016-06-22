@@ -1,6 +1,6 @@
 {
   "name": "ln-cms",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
