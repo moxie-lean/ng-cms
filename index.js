@@ -13,15 +13,23 @@ var lnCms = angular.module('lnCms', [
     $urlRouterProvider.otherwise('/not-found');
   }
 ])
-.run(['lnCmsClientService', '$urlRouter',
-  function(lnCmsClientService, $urlRouter) {
+.run(['lnCmsClientService', '$urlRouter', '$state',
+  function(lnCmsClientService, $urlRouter, $state) {
+    //add intermediate loading state which can be used for transitions animations
     lnCms.stateProvider.state({
       name: 'loading',
       templateUrl: 'templates/loading/template.html'
     });
 
+    //add error state
+    lnCms.stateProvider.state({
+      name: '503',
+      templateUrl: 'templates/503/template.html'
+    });
+
+    //add states defined in the routes endpoint
     lnCmsClientService.getRoutes()
-      .then(function(response) {
+      .then(function success(response) {
         var routes = response.data;
 
         angular.forEach(routes, function(route, key) {
@@ -55,6 +63,8 @@ var lnCms = angular.module('lnCms', [
         //enable $urlRouter listener again
         $urlRouter.listen();
         $urlRouter.sync();
+      }, function error() {
+        $state.go('503');
       });
   }
 ]);
