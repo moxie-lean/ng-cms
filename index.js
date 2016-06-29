@@ -26,7 +26,7 @@ var lnCms = angular.module('lnCms', [
     //add error state
     lnCms.stateProvider.state({
       name: '503',
-      templateUrl: 'templates/503/template.html'
+      templateUrl: 'templates/error/template.html'
     });
 
     //add states defined in the routes endpoint
