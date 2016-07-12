@@ -5,7 +5,8 @@
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
   "dependencies": {
-    "angular-ui-router": "~0.2.18"
+    "angular-ui-router": "~0.2.18",
+    "raf": "^3.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,8 +18,5 @@
   "bugs": {
     "url": "https://github.com/moxie-lean/ng-cms/issues"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "raf": "^3.2.0"
-  }
+  "license": "MIT"
 }
