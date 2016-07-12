@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/moxie-lean/ng-cms/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "raf": "^3.2.0"
+  }
 }
