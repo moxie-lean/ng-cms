@@ -35,14 +35,15 @@ var lnCms = angular.module('lnCms', [
             templateUrl: 'templates/' + route.template + '/template.html',
             controller: 'LnViewController as vm',
             resolve: {
-              staticData:function(){
+              staticData: ['lnCmsClientService', function(lnCmsClientService){
                 return lnCmsClientService.getStatic();
-              },
-              viewData: function(){
+              }],
+              viewData: ['lnCmsClientService', '$stateParams', function(lnCmsClientService, $stateParams){
                 var endpoint = route.endpoint || 'post';
                 var params = route.params || {};
+                angular.merge(params, $stateParams);
                 return lnCmsClientService.getData(endpoint, params);
-              }
+              }],
             },
             data: {
               endpoint: (route.endpoint || 'post'),
@@ -51,11 +52,6 @@ var lnCms = angular.module('lnCms', [
             }
           };
 
-          if (route.stateParams) {
-            state.params = route.stateParams;
-          }
-
-          var requestView = 'request' in route && route.request;
           if (route.url == '/') {
             // //define default state for the empty url
             var defState = {};
@@ -63,7 +59,7 @@ var lnCms = angular.module('lnCms', [
             defState.name = 'default';
             defState.url = '';
             lnCms.stateProvider.state(defState);
-          } else if ( ! requestView || route.state === '404' ) {
+          } else if ( ! state.data.request || route.state === '404' ) {
             state.resolve.viewData = function _resolve() {
               return $q.when({});
             }
