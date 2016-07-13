@@ -55,6 +55,7 @@ var lnCms = angular.module('lnCms', [
             state.params = route.stateParams;
           }
 
+          var requestView = 'request' in route && route.request;
           if (route.url == '/') {
             // //define default state for the empty url
             var defState = {};
@@ -62,8 +63,8 @@ var lnCms = angular.module('lnCms', [
             defState.name = 'default';
             defState.url = '';
             lnCms.stateProvider.state(defState);
-          } else if ( route.state === '404' ) {
-            state.resolve.viewData = function() {
+          } else if ( ! requestView || route.state === '404' ) {
+            state.resolve.viewData = function _resolve() {
               return $q.when({});
             }
           }
