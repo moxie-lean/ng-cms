@@ -45,11 +45,7 @@ var lnCms = angular.module('lnCms', [
                 return lnCmsClientService.getData(endpoint, params);
               }],
             },
-            data: {
-              endpoint: (route.endpoint || 'post'),
-              fixedParams: (route.params || {}),
-              request: 'request' in route ? route.request : true
-            }
+            request: 'request' in route ? route.request : true,
           };
 
           if (route.url == '/') {
@@ -59,7 +55,7 @@ var lnCms = angular.module('lnCms', [
             defState.name = 'default';
             defState.url = '';
             lnCms.stateProvider.state(defState);
-          } else if ( ! state.data.request || route.state === '404' ) {
+          } else if ( ! state.request || route.state === '404' ) {
             state.resolve.viewData = function _resolve() {
               return $q.when({});
             }
