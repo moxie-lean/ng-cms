@@ -1,11 +1,12 @@
 {
   "name": "ln-cms",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
   "description": "An angularjs module for loading content from a cms.",
   "main": "index.js",
   "dependencies": {
-    "angular-ui-router": "~0.2.18"
+    "angular-ui-router": "~0.2.18",
+    "raf": "^3.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

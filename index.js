@@ -15,14 +15,8 @@ var lnCms = angular.module('lnCms', [
   }
 ])
 
-.run(['lnCmsClientService', '$urlRouter', '$state',
-  function(lnCmsClientService, $urlRouter, $state) {
-    //add intermediate loading state which can be used for transitions animations
-    lnCms.stateProvider.state({
-      name: 'loading',
-      templateUrl: 'templates/loading/template.html'
-    });
-
+.run(['lnCmsClientService', '$urlRouter', '$state', '$q',
+  function(lnCmsClientService, $urlRouter, $state, $q) {
     //add error state
     lnCms.stateProvider.state({
       name: '503',
@@ -39,25 +33,33 @@ var lnCms = angular.module('lnCms', [
             name: route.state,
             url: route.url,
             templateUrl: 'templates/' + route.template + '/template.html',
-            data: {
-              endpoint: (route.endpoint || 'post'),
-              fixedParams: (route.params || {}),
-              request: 'request' in route ? route.request : true
-            }
+            controller: 'LnViewController as vm',
+            resolve: {
+              staticData: ['lnCmsClientService', function(lnCmsClientService){
+                return lnCmsClientService.getStatic();
+              }],
+              viewData: ['lnCmsClientService', '$stateParams', function(lnCmsClientService, $stateParams){
+                var endpoint = route.endpoint || 'post';
+                var params = route.params || {};
+                angular.merge(params, $stateParams);
+                return lnCmsClientService.getData(endpoint, params);
+              }],
+            },
+            request: 'request' in route ? route.request : true,
           };
 
-          if (route.stateParams) {
-            state.params = route.stateParams;
-          }
-
           if (route.url == '/') {
-            //define default state for the empty url
-            var defState = JSON.parse(JSON.stringify(state));
+            // //define default state for the empty url
+            var defState = {};
+            angular.copy(state, defState);
             defState.name = 'default';
             defState.url = '';
             lnCms.stateProvider.state(defState);
+          } else if ( ! state.request || route.state === '404' ) {
+            state.resolve.viewData = function _resolve() {
+              return $q.when({});
+            }
           }
-
           //add state for the route
           lnCms.stateProvider.state(state);
         });
@@ -74,5 +76,6 @@ var lnCms = angular.module('lnCms', [
 require('./lib/cms.config.provider');
 require('./lib/cms.client.service');
 require('./lib/cms.controller');
+require('./lib/cms-ln-view.controller');
 require('./lib/cms.meta.directive');
 require('./lib/cms.view.directive');
